@@ -70,6 +70,6 @@ var vm = new Vue({
       <cell @click="move(i, j)" :value="board[i][j]"></cell>
     </div>
   </div>
-  <span class="info"> Turno: {{ this.myPlayer === true ? 'Player Y' : 'Player X' }} </span>
+  <span class="info"> Turno: {{ this.myPlayer === true ? 'Player O' : 'Player X' }} </span>
   </div>`,
 });
