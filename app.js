@@ -14,9 +14,10 @@ var vm = new Vue({
       ['', '', ''],
       ['', '', ''],
       ['', '', '']
-    ]
+    ],
+    myPlayer: true,
+    movesLeft: 9,
   },
-  myPlayer: true,
   methods: {
     move: function(i, j) {
       if (this.board[i][j] !== '') {
@@ -27,17 +28,25 @@ var vm = new Vue({
       this.myPlayer ? this.board[i][j] = 'O' : this.board[i][j] = 'X'
       this.$forceUpdate();
       this.myPlayer ? this.myPlayer = false : this.myPlayer = true;
+      this.movesLeft--;
 
       if (this.playerHas3InARow('X')) {
-        alert("Player X win")
+        alert("Player X win");
+        this.gameOver();
       }
 
       if (this.playerHas3InARow('O')) {
-        alert("Player O win")
+        alert("Player O win");
+        this.gameOver();
+      }
+
+      if (this.movesLeft === 0) {
+        alert("DRAW");
+        this.gameOver();
       }
 
     },
-    playerHas3InARow(player) {
+    playerHas3InARow: function(player) {
       // Horizontal rows
       for (let i = 0; i < 3; i++) {
         if (this.board[0][i] === player && this.board[1][i] === player && this.board[2][i] === player) {
@@ -61,7 +70,13 @@ var vm = new Vue({
       }
 
       return false;
-    }
+    },
+    gameOver: function () {
+      if (this.movesLeft === 0 || this.playerHas3InARow('X') || this.playerHas3InARow('O')){
+        return location.reload();
+      }
+    },
+
   },
   template: `<div class="board">
 
